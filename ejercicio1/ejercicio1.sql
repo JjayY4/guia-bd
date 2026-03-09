@@ -112,3 +112,19 @@ INSERT INTO DetalleFactura (id_factura, id_producto, cantidad, subtotal) VALUES
 ('F003', 7, 3,  240.00),   -- Reproductor MP3: $80.00 x 3 = $240.00
 ('F003', 8, 1,  235.00);   -- Equipo de sonido: $235.00 x 1 = $235.00
 -- Total F003: $475.00
+
+-- ============================================================
+-- Consulta combinada: reconstruye la vista original de Excel
+-- Une las 3 tablas para mostrar toda la información de ventas
+-- ============================================================
+SELECT
+    f.id_factura AS IdFactura,
+    f.fecha_venta AS FechaVenta,
+    p.nombre AS Producto,
+    p.precio AS Precio,
+    d.cantidad AS Unidades,
+    d.subtotal AS Total
+FROM DetalleFactura d
+INNER JOIN Facturas f ON d.id_factura = f.id_factura
+INNER JOIN Productos p ON d.id_producto = p.id_producto
+ORDER BY f.id_factura, p.nombre;
